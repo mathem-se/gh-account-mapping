@@ -9,17 +9,23 @@ on:
     inputs:
       team:
         required: true
+        type: string
       api-url:
-        required: true        
+        required: true
+        type: string
       aws-region:
         required: true
-        default: 'eu-west-1'    
+        default: 'eu-west-1'
+        type: string  
       role-to-assume:
         required: true
+        type: string
       role-session-name:
         required: true
+        type: string
       account:
         required: true
+        type: string
 outputs:
   account:
     value: ${{ steps.account.outputs.accountId }}   
