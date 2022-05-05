@@ -1,4 +1,4 @@
-name: 'Fetch account'
+name: 'Authentication'
 
 permissions:
   id-token: write
@@ -7,13 +7,11 @@ permissions:
 inputs:
   team:
     required: true
-  api-url:
-    required: true
-  role-to-assume:
-    required: true
   aws-region:
     required: true
-    default: 'eu-west-1'
+    default: 'eu-west-1'    
+  role-to-assume:
+    required: true
   role-session-name:
     required: true
 outputs:
@@ -25,9 +23,6 @@ runs:
   steps:
     - name: Checkout the code
       uses: actions/checkout@v3
-      with:
-        path: ${{ github.repository }}
-        fetch-depth: 0
 
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
