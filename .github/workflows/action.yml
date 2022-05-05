@@ -26,9 +26,9 @@ on:
       account:
         required: true
         type: string
-outputs:
-  account:
-    value: ${{ steps.account.outputs.accountId }}   
+    outputs:
+      account:
+        value: ${{ steps.account.outputs.accountId }}   
 
 jobs:
   workflow:
