@@ -28,11 +28,13 @@ on:
         type: string
     outputs:
       account:
-        value: ${{ steps.account.outputs.accountId }}   
+        value: ${{ jobs.workflow.outputs.accountId }}   
 
 jobs:
   workflow:
     runs-on: ubuntu-latest
+    outputs:
+      accountId: ${{ steps.account.outputs.accountId }}    
 # runs:
 #   using: composite
     steps:
