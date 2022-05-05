@@ -1,0 +1,17 @@
+name: 'Account lookup'
+inputs:
+  team:
+    required: true
+  baseline-account:
+    required: true
+  api-url:
+    required: true
+  aws-region:
+    required: true
+    default: 'eu-west-1'
+outputs:
+  domain:
+  account:  
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

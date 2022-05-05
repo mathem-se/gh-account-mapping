@@ -1,0 +1,33 @@
+{
+  "name": "github-actions-account-mapping",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "jest": {
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  },
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@vercel/ncc": "^0.33.4",
+    "aws4-axios": "^2.4.9",
+    "axios": "^0.26.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "scripts": {
+    "build": "ncc build src/action.js -o dist",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "coverage-percentage": "jest --coverage --coverageReporters=text-summary 2>/dev/null | grep 'Functions    :' | cut -d ':' -f 2 | cut -d '%' -f 1 | xargs | tr -d '\n'",
+    "eslint": "eslint",
+    "start": "nodemon ./src/apiLocal.js",
+    "debug": "node --inspect-brk=9229 ./src/apiLocal.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
