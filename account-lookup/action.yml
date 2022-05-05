@@ -44,8 +44,11 @@ runs:
     - id: domain
       name: Get domain
       run: echo "The domain is ${{ steps.script.outputs.domain }}"
+      shell: bash
     - id: account
       name: Get account
       run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+      shell: bash
     - name: Echo account
       run: echo "${{ steps.account.outputs.accountId }}"
+      shell: bash
