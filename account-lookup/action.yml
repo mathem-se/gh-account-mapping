@@ -28,7 +28,7 @@ runs:
       with:
         path: ${{ github.repository }}
         fetch-depth: 0
-                
+
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -36,22 +36,22 @@ runs:
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
 
-    - name: Run script
-      uses: ./
-      id: script
-      with:
-        team: ${{ inputs.team }}
-        api-url: ${{ inputs.url }}
-        aws-region: ${{ inputs.aws-region }}
+    # - name: Run script
+    #   uses: ./
+    #   id: script
+    #   with:
+    #     team: ${{ inputs.team }}
+    #     api-url: ${{ inputs.url }}
+    #     aws-region: ${{ inputs.aws-region }}
 
-    - id: domain
-      name: Get domain
-      run: echo "The domain is ${{ steps.script.outputs.domain }}"
-      shell: bash
-    - id: account
-      name: Get account
-      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-      shell: bash
-    - name: Echo account
-      run: echo "${{ steps.account.outputs.accountId }}"
-      shell: bash
+    # - id: domain
+    #   name: Get domain
+    #   run: echo "The domain is ${{ steps.script.outputs.domain }}"
+    #   shell: bash
+    # - id: account
+    #   name: Get account
+    #   run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+    #   shell: bash
+    # - name: Echo account
+    #   run: echo "${{ steps.account.outputs.accountId }}"
+    #   shell: bash
