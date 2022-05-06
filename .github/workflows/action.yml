@@ -68,7 +68,7 @@ jobs:
       id: script
       with:
         team: ${{ inputs.team }}
-        api-url: ${{ inputs.url }}
+        api-url: ${{ inputs.api-url }}
         aws-region: ${{ inputs.aws-region }}
 
     - id: domain
