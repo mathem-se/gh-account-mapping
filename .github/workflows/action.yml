@@ -1,5 +1,4 @@
 name: Reusable workflow
-description: 'Test'
 
 on:
   workflow_call:
