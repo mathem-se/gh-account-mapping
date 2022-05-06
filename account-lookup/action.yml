@@ -22,9 +22,9 @@ inputs:
     role-session-name:
       required: true
       type: string
-    account:
-      required: true
-      type: string
+    # account:
+    #   required: true
+    #   type: string
 
 outputs:
   account:
