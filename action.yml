@@ -12,7 +12,9 @@ inputs:
     default: 'eu-west-1'
 outputs:
   domain:
+    description: 'Test'
   account:  
+    description: 'Test'
 runs:
   using: 'node16'
   main: 'dist/index.js'
