@@ -50,6 +50,11 @@ jobs:
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
 
+    - name: Checkout the code
+      uses: actions/checkout@v3
+      with:
+        path: ./dist
+        
     - name: Run script
       uses: ./
       id: script
