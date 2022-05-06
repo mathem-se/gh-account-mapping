@@ -5,13 +5,26 @@ permissions:
   contents: read
 
 inputs:
-  team:
-    required: true
-  api-url:
-    required: true
-  aws-region:
-    required: true
-    default: 'eu-west-1'
+  inputs:
+    team:
+      required: true
+      type: string
+    api-url:
+      required: true
+      type: string
+    aws-region:
+      required: true
+      default: 'eu-west-1'
+      type: string  
+    role-to-assume:
+      required: true
+      type: string
+    role-session-name:
+      required: true
+      type: string
+    account:
+      required: true
+      type: string
 
 outputs:
   account:
@@ -21,22 +34,31 @@ runs:
   steps:
     - name: Checkout the code
       uses: actions/checkout@v3
-    - name: Run script
-      uses: ./account-lookup/script/
-      id: script
-      with:
-        team: ${{ inputs.team }}
-        api-url: ${{ inputs.url }}
-        aws-region: ${{ inputs.aws-region }}
 
-    - id: domain
-      name: Get domain
-      run: echo "The domain is ${{ steps.script.outputs.domain }}"
-      shell: bash
-    - id: account
-      name: Get account
-      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-      shell: bash
-    - name: Echo account
-      run: echo "${{ steps.account.outputs.accountId }}"
-      shell: bash
+    - name: Configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        role-session-name: ${{ inputs.role-session-name }}
+        aws-region: ${{ inputs.aws-region }}  
+    # - name: Checkout the code
+    #   uses: actions/checkout@v3
+    # - name: Run script
+    #   uses: ./
+    #   id: script
+    #   with:
+    #     team: ${{ inputs.team }}
+    #     api-url: ${{ inputs.url }}
+    #     aws-region: ${{ inputs.aws-region }}
+
+    # - id: domain
+    #   name: Get domain
+    #   run: echo "The domain is ${{ steps.script.outputs.domain }}"
+    #   shell: bash
+    # - id: account
+    #   name: Get account
+    #   run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+    #   shell: bash
+    # - name: Echo account
+    #   run: echo "${{ steps.account.outputs.accountId }}"
+    #   shell: bash
