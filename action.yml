@@ -1,4 +1,5 @@
 name: 'Account lookup'
+description: 'Testing'
 inputs:
   team:
     required: true
