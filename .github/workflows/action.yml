@@ -64,7 +64,7 @@ jobs:
     #     path: ./
 
     - name: Run script
-      uses: ./
+      uses:  mathem-se/gh-account-mapping@main
       id: script
       with:
         team: ${{ inputs.team }}
