@@ -3,12 +3,12 @@ name: Reusable workflow
 on:
   workflow_call:
     inputs:
-      # team:
-      #   required: true
-      #   type: string
-      # api-url:
-      #   required: true
-      #   type: string
+      team:
+        required: true
+        type: string
+      api-url:
+        required: true
+        type: string
       aws-region:
         required: true
         default: 'eu-west-1'
@@ -19,9 +19,13 @@ on:
       role-session-name:
         required: true
         type: string
-      # account:
-      #   required: true
-      #   type: string
+      account:
+        required: true
+        type: string
+    outputs:        
+      account:
+        description: "The second output string"
+        value: ${{ jobs.build.outputs.account }}        
     # secrets: ##EXAMPLES
     #   username:
     #     required: true
@@ -31,6 +35,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      account: ${{ steps.account.outputs.accountId }}
 
     steps:
     - name: Checkout the code
@@ -42,3 +49,23 @@ jobs:
         role-to-assume: ${{ inputs.role-to-assume }}
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
+
+    - name: Run script
+      uses: ./
+      id: script
+      with:
+        team: ${{ inputs.team }}
+        api-url: ${{ inputs.url }}
+        aws-region: ${{ inputs.aws-region }}
+
+    - id: domain
+      name: Get domain
+      run: echo "The domain is ${{ steps.script.outputs.domain }}"
+      shell: bash
+    - id: account
+      name: Get account
+      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+      shell: bash
+    - name: Echo account
+      run: echo "${{ steps.account.outputs.accountId }}"
+      shell: bash        
