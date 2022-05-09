@@ -22,9 +22,9 @@ on:
       account:
         required: true
         type: string
-        secrets:
-            AWS_ACCOUNT:
-                required: true        
+      secrets:
+          AWS_ACCOUNT:
+              required: true        
     outputs:        
       account:
         description: "The second output string"
