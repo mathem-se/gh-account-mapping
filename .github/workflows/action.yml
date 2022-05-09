@@ -11,22 +11,29 @@ on:
         type: string
       aws-region:
         required: true
-        default: eu-west-1
+        default: 'eu-west-1'
         type: string  
-      # role-to-assume:
-      #   required: true
-      #   type: string
+      role-to-assume:
+        required: true
+        type: string
       role-session-name:
         required: true
         type: string
-        
-      secrets:
-          AWS_ACCOUNT:
-              required: true        
+      account:
+        required: true
+        type: string
+        secrets:
+            AWS_ACCOUNT:
+                required: true        
     outputs:        
       account:
         description: "The second output string"
-        value: ${{ jobs.build.outputs.account }}            
+        value: ${{ jobs.build.outputs.account }}        
+    # secrets: ##EXAMPLES
+    #   username:
+    #     required: true
+    #   password:
+    #     required: true        
 
 jobs:
   build:
@@ -39,10 +46,13 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v3
 
+    - name: Echo account
+      run: echo ${{ secret.AWS_ACCOUNT }}
+
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions'
+        role-to-assume: ${{ inputs.role-to-assume }}
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
 
