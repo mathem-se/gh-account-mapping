@@ -13,13 +13,7 @@ on:
         required: true
         default: 'eu-west-1'
         type: string  
-      role-to-assume:
-        required: true
-        type: string
       role-session-name:
-        required: true
-        type: string
-      account:
         required: true
         type: string
     secrets:
@@ -29,11 +23,6 @@ on:
       account:
         description: "The second output string"
         value: ${{ jobs.build.outputs.account }}        
-    # secrets: ##EXAMPLES
-    #   username:
-    #     required: true
-    #   password:
-    #     required: true        
 
 jobs:
   build:
@@ -43,18 +32,15 @@ jobs:
       account: ${{ steps.account.outputs.accountId }}
 
     steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
-
-    - name: Echo account
-      run: echo ${{ secrets.AWS_ACCOUNT }}
-
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: ${{ inputs.role-to-assume }}
+        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions'
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
+
+    - name: Checkout the code
+      uses: actions/checkout@v3
 
     - name: Run script
       uses:  mathem-se/gh-account-mapping@main
@@ -70,8 +56,5 @@ jobs:
 
     - id: account
       name: Get account
-      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-
-    - name: Echo account
-      run: echo "${{ steps.account.outputs.accountId }}"
+      run: "::set-output name=accountId::${{ steps.script.outputs.account }}"
       
