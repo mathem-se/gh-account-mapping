@@ -3,8 +3,6 @@ description: 'Testing'
 inputs:
   team:
     required: true
-  baseline-account:
-    required: true
   api-url:
     required: true
   aws-region:

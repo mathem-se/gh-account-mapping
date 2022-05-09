@@ -17,7 +17,7 @@ async function makeGetRequest(type, item, url) {
   const domain = getDomain.data;
   core.setOutput('domain', domain);
 
-  const getAccount = await axios.get(`${url}domain/${domain}`);
+  const getAccount = await axios.get(`${url}/domain/${domain}`);
   const account = getAccount.data;
   core.setOutput('account', account);
 }
