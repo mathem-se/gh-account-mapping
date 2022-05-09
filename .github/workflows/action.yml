@@ -19,6 +19,9 @@ on:
       role-session-name:
         required: true
         type: string
+      account:
+        required: true
+        type: string
     secrets:
       AWS_ACCOUNT:
           required: true   
@@ -60,3 +63,4 @@ jobs:
     - id: account
       name: Get account
       run: "::set-output name=accountId::${{ steps.script.outputs.account }}"
+      
