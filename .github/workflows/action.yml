@@ -13,6 +13,9 @@ on:
         required: true
         default: 'eu-west-1'
         type: string  
+      role-to-assume:
+        required: false
+        type: string
       role-session-name:
         required: true
         type: string
@@ -57,4 +60,3 @@ jobs:
     - id: account
       name: Get account
       run: "::set-output name=accountId::${{ steps.script.outputs.account }}"
-      
