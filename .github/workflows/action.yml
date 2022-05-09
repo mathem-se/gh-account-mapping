@@ -11,26 +11,22 @@ on:
         type: string
       aws-region:
         required: true
-        default: 'eu-west-1'
+        default: eu-west-1
         type: string  
-      role-to-assume:
-        required: true
-        type: string
+      # role-to-assume:
+      #   required: true
+      #   type: string
       role-session-name:
         required: true
         type: string
-      account:
-        required: true
-        type: string
+        
+      secrets:
+          AWS_ACCOUNT:
+              required: true        
     outputs:        
       account:
         description: "The second output string"
-        value: ${{ jobs.build.outputs.account }}        
-    # secrets: ##EXAMPLES
-    #   username:
-    #     required: true
-    #   password:
-    #     required: true        
+        value: ${{ jobs.build.outputs.account }}            
 
 jobs:
   build:
@@ -46,22 +42,9 @@ jobs:
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: ${{ inputs.role-to-assume }}
+        role-to-assume: arn:aws:iam:: ${{ secrets.AWS_ACCOUNT }} :role/github-actions
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
-
-    # - name: Archive production artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: dist
-    #     path: |
-    #       dist
-    #       action.yaml
-
-    # - name: Checkout the code
-    #   uses: actions/checkout@v3
-    #   with:
-    #     path: ./
 
     - name: Run script
       uses:  mathem-se/gh-account-mapping@main
