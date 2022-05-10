@@ -1,5 +1,5 @@
 name: 'Account lookup'
-description: 'Testing'
+description: 'Account lookup...'
 inputs:
   team:
     required: true
@@ -9,10 +9,10 @@ inputs:
     required: true
     default: 'eu-west-1'
 outputs:
-  domain:
-    description: 'Test'
   account:  
-    description: 'Test'
+    description: 'Account ID'
+  domain:
+    description: 'Domain name'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'dist/index.js' 
