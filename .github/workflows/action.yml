@@ -28,10 +28,10 @@ on:
     outputs:        
       account:
         description: "Account"
-        value: ${{ jobs.build.outputs.account }}
+        value: ${{ jobs.Lookup.outputs.account }}
       domain:
         description: "Domain"
-        value: ${{ jobs.build.outputs.domain }}           
+        value: ${{ jobs.Lookup.outputs.domain }}           
 
 jobs:
   Lookup:
@@ -60,11 +60,11 @@ jobs:
         api-url: ${{ inputs.api-url }}
         aws-region: ${{ inputs.aws-region }}
 
-    - name: Get domain
-      id: domain
-      run: echo "::set-output name=domain::${{ steps.script.outputs.domain }}"
+    # - name: Get domain
+    #   id: domain
+    #   run: echo "::set-output name=domain::${{ steps.script.outputs.domain }}"
 
-    - name: Get account
-      id: account
-      run: echo "::set-output name=account::${{ steps.script.outputs.account }}"
+    # - name: Get account
+    #   id: account
+    #   run: echo "::set-output name=account::${{ steps.script.outputs.account }}"
       
