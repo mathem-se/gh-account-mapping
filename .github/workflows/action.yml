@@ -27,15 +27,19 @@ on:
           required: true   
     outputs:        
       account:
-        description: "The second output string"
-        value: ${{ jobs.build.outputs.account }}        
+        description: "Account"
+        value: ${{ jobs.build.outputs.account }}
+      domain:
+        description: "Domain"
+        value: ${{ jobs.build.outputs.domain }}           
 
 jobs:
-  build:
+  Lookup:
     runs-on: ubuntu-latest
 
     outputs:
-      account: ${{ steps.account.outputs.accountId }}
+      account: ${{ steps.script.outputs.account }}
+      domain: ${{ steps.script.outputs.domain  }}
 
     steps:
     - name: Configure aws credentials
@@ -56,11 +60,11 @@ jobs:
         api-url: ${{ inputs.api-url }}
         aws-region: ${{ inputs.aws-region }}
 
-    - id: domain
-      name: Get domain
-      run: echo "The domain is ${{ steps.script.outputs.domain }}"
+    - name: Get domain
+      id: domain
+      run: echo "::set-output name=domain::${{ steps.script.outputs.domain }}"
 
-    - id: account
-      name: Get account
-      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+    - name: Get account
+      id: account
+      run: echo "::set-output name=account::${{ steps.script.outputs.account }}"
       
