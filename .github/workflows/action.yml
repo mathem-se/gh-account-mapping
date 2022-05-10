@@ -28,7 +28,7 @@ on:
         value: ${{ jobs.Lookup.outputs.account }}
       domain:
         description: "Domain"
-        value: ${{ jobs.Lookup.outputs.account }}          
+        value: ${{ jobs.Lookup.outputs.domain }}          
 
 jobs:
   Lookup:
