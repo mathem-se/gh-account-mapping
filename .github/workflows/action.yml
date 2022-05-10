@@ -1,5 +1,4 @@
 name: Reusable workflow
-
 on:
   workflow_call:
     inputs:
@@ -27,20 +26,13 @@ on:
           required: true   
     outputs:        
       account:
-        description: "Account"
-        value: ${{ jobs.Lookup.outputs.account }}
-      domain:
-        description: "Domain"
-        value: ${{ jobs.Lookup.outputs.account }}          
-
+        description: "The second output string"
+        value: ${{ jobs.build.outputs.account }}        
 jobs:
-  Lookup:
+  build:
     runs-on: ubuntu-latest
-
     outputs:
       account: ${{ steps.account.outputs.accountId }}
-      domain: ${{ steps.domain.outputs.domainName  }}
-
     steps:
     - name: Configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -48,10 +40,8 @@ jobs:
         role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions'
         role-session-name: ${{ inputs.role-session-name }}
         aws-region: ${{ inputs.aws-region }}
-
-    - name: Checkout code
+    - name: Checkout the code
       uses: actions/checkout@v3
-
     - name: Run script
       uses:  mathem-se/gh-account-mapping@main
       id: script
@@ -59,46 +49,10 @@ jobs:
         team: ${{ inputs.team }}
         api-url: ${{ inputs.api-url }}
         aws-region: ${{ inputs.aws-region }}
+    - id: domain
+      name: Get domain
+      run: echo "The domain is ${{ steps.script.outputs.domain }}"
 
     - id: account
       name: Get account
-      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-
-    - name: Get domain
-      id: domain
-      run: echo "::set-output name=domainName::${{ steps.script.outputs.domain }}" 
-      
-
-#     outputs:        
-#       account:
-#         description: "The second output string"
-#         value: ${{ jobs.build.outputs.account }}        
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     outputs:
-#       account: ${{ steps.account.outputs.accountId }}
-#     steps:
-#     - name: Configure aws credentials
-#       uses: aws-actions/configure-aws-credentials@v1
-#       with:
-#         role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions'
-#         role-session-name: ${{ inputs.role-session-name }}
-#         aws-region: ${{ inputs.aws-region }}
-#     - name: Checkout the code
-#       uses: actions/checkout@v3
-#     - name: Run script
-#       uses:  mathem-se/gh-account-mapping@main
-#       id: script
-#       with:
-#         team: ${{ inputs.team }}
-#         api-url: ${{ inputs.api-url }}
-#         aws-region: ${{ inputs.aws-region }}
-
-#     - id: account
-#       name: Get account
-#       run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-
-#     - name: Get domain
-#       id: domain
-#       run: echo "::set-output name=domainName::${{ steps.script.outputs.domain }}"      
+      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}" 
