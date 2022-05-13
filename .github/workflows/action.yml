@@ -6,9 +6,6 @@ on:
       team:
         required: true
         type: string
-      # role-to-assume:
-      #   required: false
-      #   type: string
       role-session-name:
         required: true
         type: string
