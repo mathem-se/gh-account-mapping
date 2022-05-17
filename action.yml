@@ -5,9 +5,14 @@ inputs:
     required: true
   api-url:
     required: true
-  aws-region:
-    required: true
-    default: 'eu-west-1'
+  branch:
+    required: true    
+  # aws-region:
+  #   required: true
+  #   default: 'eu-west-1'
+secrets:
+    AWS_REGION:
+      required: true
 outputs:
   account:  
     description: 'Account ID'

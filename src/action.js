@@ -24,6 +24,6 @@ async function makeGetRequest(item, url, branch) {
 
 const item = core.getInput('team');
 const branch = core.getInput('branch');
-const url = core.getInput('api-url');
+const url = core.getInput('AWS_REGION');
 
 makeGetRequest(item, url, branch);
