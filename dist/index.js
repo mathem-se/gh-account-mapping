@@ -28136,7 +28136,7 @@ async function makeGetRequest(item, url, branch) {
 
 const item = core.getInput('team');
 const branch = core.getInput('branch');
-const url = core.getInput('AWS_REGION');
+const url = core.getInput('api-url');
 
 makeGetRequest(item, url, branch);
 
