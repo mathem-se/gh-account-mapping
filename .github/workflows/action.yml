@@ -6,6 +6,9 @@ on:
       team:
         required: true
         type: string
+      branch:
+        required: true
+        type: string
       role-session-name:
         required: true
         type: string
@@ -48,6 +51,7 @@ jobs:
       id: script
       with:
         team: ${{ inputs.team }}
+        branch: ${{ inputs.branch }}
         api-url: ${{ secrets.AWS_API }}
         aws-region: ${{ secrets.AWS_REGION }}
 

@@ -28124,20 +28124,21 @@ const interceptor = (0,aws4_axios__WEBPACK_IMPORTED_MODULE_0__/* .aws4Intercepto
 
 axios.interceptors.request.use(interceptor);
 
-async function makeGetRequest(type, item, url) {
-  const getDomain = await axios.get(`${url}/${type}/${item}`);
+async function makeGetRequest(item, url, branch) {
+  const getDomain = await axios.get(`${url}/team/${item}`);
   const domain = getDomain.data;
   core.setOutput('domain', domain);
 
-  const getAccount = await axios.get(`${url}/domain/${domain}`);
+  const getAccount = await axios.get(`${url}/domain/${domain}/${branch}/`);
   const account = getAccount.data;
   core.setOutput('account', account);
 }
 
 const item = core.getInput('team');
+const branch = core.getInput('branch');
 const url = core.getInput('api-url');
 
-makeGetRequest('team', item, url);
+makeGetRequest(item, url, branch);
 
 })();
 
