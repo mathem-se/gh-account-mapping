@@ -1,19 +1,17 @@
 name: 'Account lookup'
 description: 'Account lookup...'
 inputs:
-  team:
-    required: true
+  accountName:
+    required: false
   api-url:
     required: true
   branch:
-    required: true    
+    required: true      
   aws-region:
     required: true
 outputs:
   account:  
     description: 'Account ID'
-  domain:
-    description: 'Domain name'
 runs:
   using: 'node16'
   main: 'dist/index.js' 

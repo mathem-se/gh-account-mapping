@@ -3,9 +3,10 @@ name: Reusable workflow
 on:
   workflow_call:
     inputs:
-      team:
-        required: true
+      accountName:
+        required: false
         type: string
+        default: null
       branch:
         required: true
         type: string
@@ -50,7 +51,7 @@ jobs:
       uses:  mathem-se/gh-account-mapping@main
       id: script
       with:
-        team: ${{ inputs.team }}
+        accountName: ${{ inputs.accountName }}
         branch: ${{ inputs.branch }}
         api-url: ${{ secrets.AWS_API }}
         aws-region: ${{ secrets.AWS_REGION }}
@@ -58,7 +59,3 @@ jobs:
     - id: account
       name: Get account
       run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
-
-    - name: Get domain
-      id: domain
-      run: echo "::set-output name=domainName::${{ steps.script.outputs.domain }}" 

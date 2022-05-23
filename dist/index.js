@@ -27839,6 +27839,53 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 1838:
+/***/ ((module, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+__nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__) => {
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony import */ var aws4_axios__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(5506);
+
+
+const core = __nccwpck_require__(7846);
+const axios = __nccwpck_require__(3760);
+
+const region = core.getInput("aws-region");
+
+const interceptor = (0,aws4_axios__WEBPACK_IMPORTED_MODULE_0__/* .aws4Interceptor */ .kq)({
+  region,
+  service: "execute-api",
+});
+
+axios.interceptors.request.use(interceptor);
+
+const accountName = core.getInput("accountName");
+const branch = core.getInput("branch");
+const url = core.getInput("api-url");
+
+let accName;
+if (accountName) {
+  accName = accountName;
+} else {
+  accName = "LEGACY";
+}
+
+const account = await getAccount(url, domain, branch);
+
+core.setOutput("account", account);
+
+async function getAccount(url, domain, branch) {
+  const getAccount = await axios.get(`${url}/domain/${domain}/${branch}/`);
+  const account = getAccount.data;
+  return account;
+}
+
+__webpack_handle_async_dependencies__();
+}, 1);
+
+/***/ }),
+
 /***/ 1693:
 /***/ ((module) => {
 
@@ -28088,6 +28135,80 @@ module.exports = JSON.parse('{"amp":"&","apos":"\'","gt":">","lt":"<","quot":"\\
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackThen = typeof Symbol === "function" ? Symbol("webpack then") : "__webpack_then__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var completeQueue = (queue) => {
+/******/ 			if(queue) {
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var completeFunction = (fn) => (!--fn.r && fn());
+/******/ 		var queueFunction = (queue, fn) => (queue ? queue.push(fn) : completeFunction(fn));
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackThen]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						completeQueue(queue);
+/******/ 						queue = 0;
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 												obj[webpackThen] = (fn, reject) => (queueFunction(queue, fn), dep['catch'](reject));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 								ret[webpackThen] = (fn) => (completeFunction(fn));
+/******/ 								ret[webpackExports] = dep;
+/******/ 								return ret;
+/******/ 		}));
+/******/ 		__nccwpck_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue = hasAwait && [];
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var isEvaluating = true;
+/******/ 			var nested = false;
+/******/ 			var whenAll = (deps, onResolve, onReject) => {
+/******/ 				if (nested) return;
+/******/ 				nested = true;
+/******/ 				onResolve.r += deps.length;
+/******/ 				deps.map((dep, i) => (dep[webpackThen](onResolve, onReject)));
+/******/ 				nested = false;
+/******/ 			};
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = () => (resolve(exports), completeQueue(queue), queue = 0);
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackThen] = (fn, rejectFn) => {
+/******/ 				if (isEvaluating) { return completeFunction(fn); }
+/******/ 				if (currentDeps) whenAll(currentDeps, fn, rejectFn);
+/******/ 				queueFunction(queue, fn);
+/******/ 				promise['catch'](rejectFn);
+/******/ 			};
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				if(!deps) return outerResolve();
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn, result;
+/******/ 				var promise = new Promise((resolve, reject) => {
+/******/ 					fn = () => (resolve(result = currentDeps.map((d) => (d[webpackExports]))));
+/******/ 					fn.r = 0;
+/******/ 					whenAll(currentDeps, fn, reject);
+/******/ 				});
+/******/ 				return fn.r ? promise : result;
+/******/ 			}).then(outerResolve, reject);
+/******/ 			isEvaluating = false;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -28104,44 +28225,12 @@ module.exports = JSON.parse('{"amp":"&","apos":"\'","gt":">","lt":"<","quot":"\\
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-__nccwpck_require__.r(__webpack_exports__);
-/* harmony import */ var aws4_axios__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(5506);
-
-
-const core = __nccwpck_require__(7846);
-const axios = __nccwpck_require__(3760);
-
-const region = core.getInput('aws-region');
-
-const interceptor = (0,aws4_axios__WEBPACK_IMPORTED_MODULE_0__/* .aws4Interceptor */ .kq)({
-  region,
-  service: 'execute-api'
-});
-
-axios.interceptors.request.use(interceptor);
-
-async function makeGetRequest(item, url, branch) {
-  const getDomain = await axios.get(`${url}/team/${item}`);
-  const domain = getDomain.data;
-  core.setOutput('domain', domain);
-
-  const getAccount = await axios.get(`${url}/domain/${domain}/${branch}/`);
-  const account = getAccount.data;
-  core.setOutput('account', account);
-}
-
-const item = core.getInput('team');
-const branch = core.getInput('branch');
-const url = core.getInput('api-url');
-
-makeGetRequest(item, url, branch);
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module used 'module' so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(1838);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
