@@ -27864,19 +27864,13 @@ const accountName = core.getInput("accountName");
 const branch = core.getInput("branch");
 const url = core.getInput("api-url");
 
-let accName;
-if (accountName) {
-  accName = accountName;
-} else {
-  accName = "LEGACY";
-}
+const accName = accountName ? accountName : "LEGACY";
 
-const account = await getAccount(url, domain, branch);
-
+const account = await getAccount(url, accName, branch);
 core.setOutput("account", account);
 
-async function getAccount(url, domain, branch) {
-  const getAccount = await axios.get(`${url}/domain/${domain}/${branch}/`);
+async function getAccount(url, accName, branch) {
+  const getAccount = await axios.get(`${url}/domain/${accName}/${branch}/`);
   const account = getAccount.data;
   return account;
 }
