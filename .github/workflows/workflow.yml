@@ -1,0 +1,58 @@
+name: Reusable workflow
+
+on:
+  workflow_call:
+    inputs:
+      accountName:
+        required: false
+        type: string
+        default: null
+      branch:
+        required: true
+        type: string
+      role-session-name:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCOUNT:
+          required: true
+      AWS_API:
+          required: true
+      AWS_REGION:
+          required: true                    
+    outputs:        
+      account:
+        description: "Account"
+        value: ${{ jobs.Lookup.outputs.account }}       
+
+jobs:
+  Lookup:
+    runs-on: ubuntu-latest
+
+    outputs:
+      account: ${{ steps.account.outputs.accountId }}
+      domain: ${{ steps.domain.outputs.domainName  }}
+
+    steps:
+    - name: Configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: 'arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions'
+        role-session-name: ${{ inputs.role-session-name }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run script
+      uses:  mathem-se/gh-account-mapping@main
+      id: script
+      with:
+        accountName: ${{ inputs.accountName }}
+        branch: ${{ inputs.branch }}
+        api-url: ${{ secrets.AWS_API }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - id: account
+      name: Get account
+      run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
