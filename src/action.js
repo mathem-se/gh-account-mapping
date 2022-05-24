@@ -17,16 +17,18 @@ const branch = core.getInput("branch");
 const url = core.getInput("api-url");
 const team = core.getInput("team");
 
-let accName;
+// let accName;
 
-console.log(team)
-if (team != null) {
-  const getDomain = await axios.get(`${url}/team/${team}`);
-  accName = getDomain.data;
-  core.setOutput("domain", accName);
-} else {
-  accName = accountName ? accountName : "LEGACY";
-}
+// console.log(team)
+// if (team != null) {
+//   const getDomain = await axios.get(`${url}/team/${team}`);
+//   accName = getDomain.data;
+//   core.setOutput("domain", accName);
+// } else {
+//   accName = accountName ? accountName : "LEGACY";
+// }
+
+const accName = accountName ? accountName : "LEGACY";
 
 const account = await getAccount(url, accName, branch);
 core.setOutput("account", account);
