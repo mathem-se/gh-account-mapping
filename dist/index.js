@@ -27863,8 +27863,17 @@ axios.interceptors.request.use(interceptor);
 const accountName = core.getInput("accountName");
 const branch = core.getInput("branch");
 const url = core.getInput("api-url");
+const team = core.getInput("team");
 
-const accName = accountName ? accountName : "LEGACY";
+let accName;
+
+if (!team) {
+  const getDomain = await axios.get(`${url}/team/${team}`);
+  accName = getDomain.data;
+  core.setOutput("domain", accName);
+} else {
+  accName = accountName ? accountName : "LEGACY";
+}
 
 const account = await getAccount(url, accName, branch);
 core.setOutput("account", account);
