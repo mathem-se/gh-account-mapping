@@ -1,6 +1,8 @@
 name: 'Account lookup'
 description: 'Account lookup...'
 inputs:
+  team:
+    required: false
   accountName:
     required: false
   api-url:
@@ -12,6 +14,8 @@ inputs:
 outputs:
   account:  
     description: 'Account ID'
+  domain:
+    description: 'Domain name'    
 runs:
   using: 'node16'
   main: 'dist/index.js' 
