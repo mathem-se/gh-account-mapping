@@ -19,7 +19,7 @@ const team = core.getInput("team");
 
 let accName;
 
-if (!team) {
+if (team != null) {
   const getDomain = await axios.get(`${url}/team/${team}`);
   accName = getDomain.data;
   core.setOutput("domain", accName);
