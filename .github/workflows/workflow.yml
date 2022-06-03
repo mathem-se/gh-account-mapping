@@ -31,7 +31,6 @@ jobs:
 
     outputs:
       account: ${{ steps.account.outputs.accountId }}
-      domain: ${{ steps.domain.outputs.domainName  }}
 
     steps:
     - name: Configure aws credentials
