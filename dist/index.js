@@ -27861,22 +27861,15 @@ const interceptor = (0,aws4_axios__WEBPACK_IMPORTED_MODULE_0__/* .aws4Intercepto
 axios.interceptors.request.use(interceptor);
 
 const accountName = core.getInput("accountName");
-const branch = core.getInput("branch");
 const url = core.getInput("api-url");
-const team = core.getInput("team");
-
-// let accName;
-
-// console.log(team)
-// if (team != null) {
-//   const getDomain = await axios.get(`${url}/team/${team}`);
-//   accName = getDomain.data;
-//   core.setOutput("domain", accName);
-// } else {
-//   accName = accountName ? accountName : "LEGACY";
-// }
+let branch = core.getInput("branch");
 
 const accName = accountName ? accountName : "LEGACY";
+
+const branches = ["main", "master", "develop"];
+if (!branches.includes(branch) && accName === "LEGACY") {
+  branch = "ANY";
+}
 
 const account = await getAccount(url, accName, branch);
 core.setOutput("account", account);
