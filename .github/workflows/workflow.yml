@@ -24,6 +24,9 @@ on:
       account:
         description: "Account"
         value: ${{ jobs.Lookup.outputs.account }}       
+      environment:
+        description: "Environment"
+        value: ${{ jobs.Lookup.outputs.environment }}
 
 jobs:
   Lookup:
@@ -32,6 +35,7 @@ jobs:
     outputs:
       account: ${{ steps.account.outputs.accountId }}
       domain: ${{ steps.domain.outputs.domainName  }}
+      environment: ${{ steps.environment.outputs.environment }}
 
     steps:
     - name: Configure aws credentials
@@ -56,3 +60,14 @@ jobs:
     - id: account
       name: Get account
       run: echo "::set-output name=accountId::${{ steps.script.outputs.account }}"
+
+    - id: environment
+      name: Get environment
+      run: |
+        if [[ ${{ inputs.branch }} == "develop" ]]; then
+          echo "::set-output name=environment::test"
+        fi
+
+        if [[ ${{ inputs.branch }} == "master" ]] || [[ ${{ inputs.branch }} == "main" ]]; then
+          echo "::set-output name=environment::prod"
+        fi
